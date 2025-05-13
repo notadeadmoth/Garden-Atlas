@@ -1,0 +1,1210 @@
+body {
+    font-family:'Courier New', Courier, monospace, Times, serif;
+    background-color: #f5f5dc;
+    /* Remove static background-image */
+    /* background-image: url('Images/lattice_tiled2.webp'), url('Images/background_spring.jpeg'); */
+    background-repeat: repeat, no-repeat;
+    background-size: auto, cover;
+    background-attachment: scroll, fixed;
+    background-position: top left, center center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Add video background styling */
+#spring-bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -100;
+    pointer-events: none;
+    opacity: 1;
+}
+
+/* Add lattice background styling */
+#lattice-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -99;
+    pointer-events: none;
+    background-image: url('Images/lattice_tiled2.webp');
+    background-repeat: repeat;
+    background-size: auto;
+    opacity: 1;
+}
+
+header {
+    font-family: 'Fleur De Leah', Times, serif;;
+    font-size: xx-large;
+    background-color: #334131;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    padding-bottom: 0rem;
+}
+
+#map {
+    height: 700px;
+    margin: 1rem;
+    border: 3px solid #8b4513;
+    border-radius: 20px;
+}
+
+#plant-info {
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #a1afa5;
+    border: 3px solid #8b4513;
+    border-radius: 20px;
+
+    
+}
+
+#plant-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+h1 {
+    position: relative; 
+    z-index: 300;
+    text-shadow: 5px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+    display: none;
+    text-align:  center;
+    margin-bottom: 0.5rem;
+}
+
+#ivy {
+    filter: drop-shadow(5px 0px 5px #222);
+}
+
+#plant-list li {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    
+}
+
+#plant-list li.weed {
+    background-color: rgb(230, 189, 189);
+}
+
+#plant-list li.native {
+    background-color: rgb(188, 204, 188);
+}
+
+body#herbarium-page #plant-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 250px));
+    gap: 1.5rem;
+    list-style-type: none;
+    padding: 0;
+    justify-content: center;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 850px;
+    scrollbar-width: auto;
+    scrollbar-color: #8b4513 #00000000;
+    overflow-y: auto;
+}
+body#herbarium-page #plant-list::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+}
+body#herbarium-page #plant-list::-webkit-scrollbar-thumb {
+    background: #8b4513;
+    border-radius: 4px;
+}
+body#herbarium-page #plant-list:has(li) {
+    /* Only show scrollbar if content overflows */
+    overflow-y: auto;
+}
+body#herbarium-page #plant-list:not(:has(li)) {
+    overflow-y: hidden;
+}
+body#herbarium-page #plant-list:empty {
+    overflow-y: hidden !important;
+}
+
+body#herbarium-page #plant-list li {
+    width: auto;
+    margin-bottom: 0%;
+    justify-items: center;
+    border-radius: 10px;
+    border-width: 2px;
+    color: black;
+    transition: transform 0.18s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0.2, 0.2, 1);
+    /* Add smooth scaling and shadow transition */
+}
+
+body#herbarium-page #plant-list li:hover {
+    /* Remove hover effect for herbarium page plant list items */
+    background-color: #fff;
+    transform: none;
+    box-shadow: none;
+    z-index: auto;
+}
+
+body#index-page #plant-list {
+    display: block;
+    list-style-type: none;
+    padding: 0;
+}
+body#index-page #plant-list li {
+    width: fit-content;
+    min-width: 200px;
+    max-width: 600px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.18s cubic-bezier(0.4, 0.2, 0.2, 1), transform 0.18s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+body#index-page #plant-list li:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.253);
+    transform: scale(1.04);
+}
+
+
+/* Style for the navigation bar */
+nav {
+    margin-top: 1rem;
+}
+
+.tabs {
+    font-family:'Courier New', Courier, monospace, Times, serif;
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.tabs li {
+    display: inline;
+        border-top: #8b4513 solid 2px;
+        border-left: #8b4513 solid 2px;
+        border-right: #8b4513 solid 2px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding-bottom: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.tabs a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #b9b0b0;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+    transition: background-color 0.3s, border-color 0.3s;
+    padding-top: 10px;
+}
+
+.tabs a:hover {
+    background-color: #f0f0f0;
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+    border-color: #ccc;
+    color: #334131;
+    padding-top: 10px;
+}
+
+#calendar-container {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    background-color: #fff8dc;
+    padding: 1rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+}
+
+.calendar-day {
+    background-color: #fff;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    padding: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+}
+
+#log-section {
+    flex: 1;
+    background-color: #fff8dc;
+    padding: 1rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+}
+
+#log-input {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 1rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+#save-log {
+    display: block;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#save-log:hover {
+    background-color: #a0522d;
+}
+
+#log-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#herbarium-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    position: relative;
+}
+
+/* Add a wrapper for shadow and form */
+.add-plant-wrapper {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto 3rem auto;
+}
+
+#add-plant-shadow {
+    position: absolute;
+    margin: 0 auto 3rem auto;
+    top: 235px;
+    width: 325px;
+    transform: translateX(55px);
+    height: 76%;
+    z-index: 0;
+    box-shadow:#0000005e -15px 5px 50px 20px;
+    pointer-events: none;
+    background: rgb(252, 250, 241);
+
+}
+#add-plant-section {
+    position: relative;
+    z-index: 1;
+    background-size: 150% 110%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    z-index: 1;
+    border: #000000 solid 60px;
+    border-image: url('Images/form.png') 65 repeat;
+    max-width: 300px;
+     
+}
+
+/* small form underlay */
+#plant-list-section, #search-section {
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: rgba(10, 14, 12, 0.5);
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 1.5rem;
+        background: #fff8f0cc;
+        border-radius: 1.2rem;
+        box-shadow: 0 2px 16px 0 #0002;
+}
+
+#add-plant-form {
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 600px;
+    margin-bottom: 2rem auto;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#add-plant-form input, #add-plant-form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border: 2px solid #8b4513;
+    border-radius: 7px;
+    width: fit-content;
+    
+    
+}
+
+#add-plant-form input[type="radio"] {
+    accent-color: #8b4513;
+}
+
+#add-plant-form button {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+#add-plant-form button:hover {
+    background-color: #a0522d;
+}
+
+#search-bar {
+    width: 80%; /* Reduce width of the input */
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 0.5rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+}
+
+input {
+    padding-right: 0px !important;
+}
+
+#plant-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#plant-list li {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    background-color: fff8dc;
+}
+#plant-list li:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.253);
+}
+
+#plant-list img {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.remove-plant {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+}
+
+.remove-plant:hover {
+    background-color: #a0522d;
+}
+
+/* Style for plant encyclopedia entries */
+.plant-entry {
+    max-width: 300px; /* Set a maximum width for each entry */
+    margin: 10px; /* Add some spacing between entries */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-block; /* Allow entries to sit side by side */
+    vertical-align: top;
+    text-align: center;
+}
+
+/* Style for the month slider */
+#month-slider-container {
+    font-family:'Courier New', Courier, monospace, Times, serif;
+    font-size:x-large;
+    font-weight: bold;
+    color: #f0f0f0;
+    text-align: center;
+    margin: 1rem 0;
+    text-shadow: #2222229c 2px 2px 5px;
+}
+
+#month-slider {
+    width: 93%;
+    margin: 0 auto;
+    display: block;
+    accent-color: #334131;
+}
+
+#month-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+#month-labels span {
+    flex: 1;
+    text-align: center;
+}
+
+.plant-svg-icon:hover svg {
+    transform: scale(1.15);
+    transition: transform 0.18s cubic-bezier(0.4, 0.2, 0.2, 1);
+    z-index: 10;
+}
+.plant-svg-icon svg {
+    transition: transform 0.18s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+#garden-manager {
+    color: #f0f0f0;
+    align-items: center;
+    border: #617e5d solid 2px;
+    border-radius: 20px;
+    border-width: 5px;
+    margin: 1rem;
+    padding-left: 1rem;
+    background-color: #8eb38e91;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+
+#create-garden-btn {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#create-garden-btn:hover {
+    background-color: #a0522d;
+    
+}
+#rename-garden-btn {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#rename-garden-btn:hover {
+    background-color: #a0522d;
+}
+#delete-garden-btn {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#delete-garden-btn:hover {
+    background-color: #a0522d;
+}
+#garden-select {
+    margin: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    background-color: #8b4513;
+    color: white;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#upload-input {
+    margin: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    background-color: #8b4513;
+    color: white;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#selected-plant-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.253);
+    border-width: 3px;
+    border-style: solid;
+    border-color: #8b4513;
+}
+#selected-plant-info {
+    color: #f0f0f0;
+    text-shadow: #2222229c 2px 2px 5px;
+    font-size: large;
+    padding-right: 1.5rem;
+}
+
+#delete-all-markers-btn {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#delete-all-markers-btn:hover {
+    background-color: #a0522d;
+}
+
+.flipbook .hard {
+    background: #5b612b !important;
+    color: #fff;
+    font-family: 'Fleur De Leah', Times, serif;
+    font-size: 1.8rem;
+    font-weight: bold;
+    box-shadow: #222222cc 2px 2px 10px;
+}
+
+.flipbook .hard h3 {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 90%;
+    text-align: center;
+    padding: 0.5em 0.2em;
+    border-radius: 10px;
+    font-size: clamp(1.2rem, 7vw, 5.5rem); /* Scales with book width */
+    color: #e68b15;
+    text-shadow: #000000e7 0px 0px 9px;
+    pointer-events: none;
+}
+
+.flipbook .hard img, .flipbook .hard image {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.flipbook .hard small{
+	font-style: italic;
+	font-weight: lighter;
+	opacity: 0.7;
+	font-size: 14px;
+
+}
+
+.flipbook .page {
+    background: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+    gap: 10px;
+}
+
+.flipbook .page small{
+	font-size: 14px;
+}
+.wrapper {
+  align-items: center !important;
+  display: flex !important;
+  height: 90%;
+  justify-content: center;
+  margin: 5% auto !important; /* Center horizontally */
+  width: 90% !important;
+  max-width: 1150px; /* Set your desired maximum book width here */
+  margin-bottom: 5rem !important; /* Add some space below the book */
+}
+
+.aspect {
+  padding-bottom: 70%;
+  position: relative;
+  width: 100%;
+  max-width: 100%; /* Prevent aspect from exceeding wrapper */
+  margin: 0 auto; /* Center aspect inside wrapper */
+}
+
+.aspect-inner {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.flipbook {
+  height: 100%;
+  transition: margin-left 0.25s ease-out;
+  width: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin: 32px auto; /* Center flipbook inside aspect */
+  position: relative;
+  max-width: 100%; /* Prevent flipbook from exceeding parent */
+}
+
+.flipbook .even {
+    background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(2, #dadada));
+    background-image:-webkit-linear-gradient(left, #fff 95%, #dadada 100%);
+    background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%);
+    background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%);
+    background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%);
+    background-image:linear-gradient(left, #fff 95%, #dadada 100%);
+}
+
+.flipbook .odd {
+    background: linear-gradient(to left, #fff 95%, #cacaca 100%);
+    background-image:-webkit-linear-gradient(right, #fff 95%, #cacaca 100%);
+    background-image:-moz-linear-gradient(right, #fff 95%, #cacaca 100%);
+    background-image:-ms-linear-gradient(right, #fff 95%, #cacaca 100%);
+    background-image:-o-linear-gradient(right, #fff 95%, #cacaca 100%);
+    background-image:linear-gradient(to left, #fff 95%, #cacaca 100%);
+}
+
+.flipbook .page {
+  height: 100%;
+  width: 100%;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  overflow: hidden;
+}
+
+.flipbook .page img {
+  max-width: 100%;
+  height: 100%;
+}
+
+#bookcover {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  overflow: hidden;
+  background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(2, #dadada));
+  background-image:-webkit-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:linear-gradient(left, #fff 95%, #dadada 100%);
+  
+}
+
+/* Overlay SVG on book cover */
+#bookcover svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 45%;
+  height: 45%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.7;
+  display: block;
+  filter: drop-shadow(0 0px 4px rgb(0, 0, 0));
+}
+
+#bookcover svg.corner-svg {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 28%;
+  height: 28%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.85;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.32));
+}
+
+#bookcover-inner {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  overflow: hidden;
+  background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(2, #dadada));
+  background-image:-webkit-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:linear-gradient(left, #fff 95%, #dadada 100%);
+  font-family: 'Courier New', Courier, monospace, Times, serif;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+
+.inner-cover-text p {
+    padding: 1.5em 2em; /* Adjust as needed */
+}
+
+#backcover {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  overflow: hidden;
+  background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(2, #dadada));
+  background-image:-webkit-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:linear-gradient(left, #fff 95%, #dadada 100%);
+}
+
+#backcover-inner {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  overflow: hidden;
+  background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(2, #dadada));
+  background-image:-webkit-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%);
+  background-image:linear-gradient(left, #fff 95%, #dadada 100%);
+}
+
+.inner-cover-text {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  pointer-events: none;
+}
+
+#bookcover-inner img {
+  position: absolute !important;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1;
+  object-fit: cover;
+  object-position: 35% center;
+  transform: scaleX(-1);
+  pointer-events: none;
+}
+
+/* Flipbook shadow: always centered, scales with book width */
+.flipbook-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -75px; /* Add a small offset from the bottom */
+  transform: translateX(-50%);
+  width: 60%; /* Reduce width to avoid stretching */
+  aspect-ratio: 8/10.511; /* Maintain a 3:1 oval aspect ratio */
+  background: none;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(32px);
+}
+
+.flipbook-shadow::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 40%;
+  background: rgba(0, 0, 0, 0.384);
+}
+
+#embellish {
+    top: 79% !important;
+    left: 87% !important;
+    height: 800% !important;
+    z-index: -1;
+}
+
+/* Style for the dynamic Table of Contents in the herbarium */
+#herbarium-toc ul#herbarium-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    align-self:  left;
+    max-width: none !important; /* Remove previous max-width */
+    flex: 1 1 auto;         /* Allow list to grow to fill space */
+    max-height: none !important;       /* Remove previous max-height */
+    height: 100%;           /* Fill remaining space */
+    overflow-y: auto; 
+    width: 100% !important; /* Span the full width of the TOC/page */
+    align-self: stretch !important; /* Ensure the list stretches to container width */
+    justify-content: flex-start; /* Left-justify list items if flex is used */
+    text-align: left; /* Left-align text in the list */
+    scrollbar-gutter: stable both-edges; /* Keep scrollbar on right edge */
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.2s;
+}
+#herbarium-toc ul#herbarium-toc-list:hover,
+#herbarium-toc ul#herbarium-toc-list:focus,
+#herbarium-toc ul#herbarium-toc-list:active {
+    scrollbar-color: #8b4513 #0000;
+}
+#herbarium-toc ul#herbarium-toc-list::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+#herbarium-toc ul#herbarium-toc-list:hover::-webkit-scrollbar,
+#herbarium-toc ul#herbarium-toc-list:focus::-webkit-scrollbar,
+#herbarium-toc ul#herbarium-toc-list:active::-webkit-scrollbar {
+    opacity: 1;
+}
+#herbarium-toc ul#herbarium-toc-list::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+#herbarium-toc ul#herbarium-toc-list:hover::-webkit-scrollbar-thumb,
+#herbarium-toc ul#herbarium-toc-list:focus::-webkit-scrollbar-thumb,
+#herbarium-toc ul#herbarium-toc-list:active::-webkit-scrollbar-thumb {
+    background: #8b4513;
+}
+#herbarium-toc ul#herbarium-toc-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.7em;
+    background: transparent;
+    border-radius: 8px;
+    padding: 0.4em 0.8em;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    font-size: 1.1em;
+    transition: background 0.2s;
+    width: 100%; /* Each list item spans the full width */
+    justify-content: flex-start; /* Left-justify content in flex container */
+    text-align: left;
+    box-sizing: border-box;
+}
+#herbarium-toc {
+    position: relative;
+    min-height: 120px;
+    height: 100%; /* Make TOC page fill available height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch; /* Make children (title and list) stretch to full width */
+}
+#herbarium-toc ul#herbarium-toc-list svg {
+    margin-right: 0.7em;
+    flex-shrink: 0;
+}
+#herbarium-toc .toc-title {
+    font-size: 1.7em;
+    font-weight: bold;
+    text-align: center !important; 
+    margin-top: 2rem;         /* Remove any top margin */
+    margin-bottom: 0.5em;  /* Optional: space below title */
+    align-self: center; /* Align to top if needed */
+    text-align: left !important; /* Left-align the title */
+    align-self: flex-start !important; /* Ensure title is at the left */
+    width: 100%;
+    padding-left: 1.5em; /* Optional: add some left padding for aesthetics */
+}
+#herbarium-toc ul#herbarium-toc-list::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+}
+#herbarium-toc ul#herbarium-toc-list::-webkit-scrollbar-thumb {
+    background: #8b4513;
+    border-radius: 4px;
+}
+.plant-info img {
+    margin: 0 auto 0rem auto;
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: 350px;
+    object-fit: contain;
+    padding-bottom: 1rem;
+    padding-top: 2rem;
+}
+.plant-info {
+    text-align: left;
+    padding: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    justify-content: flex-start;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    max-height: 70vh;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.2s;
+}
+.plant-info:hover,
+.plant-info:focus,
+.plant-info:active {
+    scrollbar-color: #8b4513 #0000;
+}
+.plant-info::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.plant-info:hover::-webkit-scrollbar,
+.plant-info:focus::-webkit-scrollbar,
+.plant-info:active::-webkit-scrollbar {
+    opacity: 1;
+}
+.plant-info::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+.plant-info:hover::-webkit-scrollbar-thumb,
+.plant-info:focus::-webkit-scrollbar-thumb,
+.plant-info:active::-webkit-scrollbar-thumb {
+    background: #8b4513;
+}
+
+.flipbook .page.even .plant-info {
+    direction: rtl;
+    unicode-bidi: plaintext;
+}
+.flipbook .page.even .plant-info > * {
+    direction: ltr;
+    unicode-bidi: plaintext;
+}
+.flipbook .page.odd .plant-info {
+    direction: ltr;
+}
+.flipbook .page.odd .plant-info > * {
+    direction: ltr;
+}
+/* Optional: for Firefox, use scrollbar-gutter */
+.flipbook .page.even .plant-info {
+    scrollbar-gutter: stable both-edges;
+}
+.flipbook .page.odd .plant-info {
+    scrollbar-gutter: stable both-edges;
+}
+
+/* Style for the gallery photo grid, upload form, and images */
+.gallery-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff8f0cc;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px 0 #0002;
+}
+.gallery-container h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2.2rem;
+  color: #3a3a2a;
+}
+#upload-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: .5rem;
+}
+.upload-label {
+  font-weight: 500;
+  color: #4a4a3a;
+}
+#upload-btn {
+  background: #7bb661;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 1rem;
+}
+#upload-btn:hover {
+  background: #5e944c;
+}
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  padding: 0.5rem;
+}
+.gallery-photo {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 0.7rem;
+  box-shadow: 0 1px 8px 0 #0001;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: #eee;
+  cursor: grab;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.gallery-photo:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 16px 0 #0002;
+}
+.gallery-photo:active {
+  cursor: grabbing;
+  box-shadow: 0 4px 16px 0 #a0522d44;
+  transform: scale(0.97);
+}
+@media (max-width: 600px) {
+  .gallery-container {
+    padding: 0.5rem;
+  }
+  .photo-grid {
+    gap: 0.5rem;
+  }
+}
+
+#delete-bin {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: min(900px, 90vw);
+  max-width: 100vw;
+  position: fixed;
+  bottom: 2.5rem;
+  height: 120px;
+  background: #fff8f0ee;
+  border: 2.5px dashed #a0522d;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px 0 #0002;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: #a0522d;
+  z-index: 9999;
+  cursor: pointer;
+  opacity: 0.92;
+  transition: background 0.2s, border 0.2s, color 0.2s;
+  user-select: none;
+}
+#delete-bin br,
+#delete-bin {
+  font-size: 0;
+}
+#delete-bin::before {
+  content: '🗑️';
+  font-size: 2.2rem;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+#delete-bin.over::before {
+  color: #d32f2f;
+}
+#delete-bin br,
+#delete-bin {
+  font-size: 0;
+}
+#delete-bin::before {
+  content: '🗑️';
+  font-size: 2.2rem;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+#delete-bin.over::before {
+  color: #d32f2f;
+}
+
+#preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 30, 30, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+#preview-window {
+  background: #fff8f0;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 32px 0 #0005;
+  padding: 1.5rem;
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#preview-img {
+  max-width: 70vw;
+  max-height: 70vh;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px 0 #0002;
+  background: #eee;
+}
+#close-preview {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 2.5rem;
+  color: #a0522d;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 2;
+  transition: color 0.2s;
+  /* Add circle background */
+  background: #fff8f0;
+  border-radius: 50%;
+  width: 0.9em;
+  height: 0.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.342);
+}
+#close-preview:hover {
+  color: #d32f2f;
+  background: #ffe0e0;
+}

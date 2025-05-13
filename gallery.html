@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Limelight&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herbarium</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body id="herbarium-page">
+    <video id="spring-bg-video" autoplay loop muted playsinline>
+        <source src="Images/background_spring.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="lattice-bg"></div>
+    <img id="ivy" src="https://www.freeiconspng.com/uploads/ivy-icon-symbol-10.png" alt="Ivy Icon" style="position: absolute; top: 0; left: 0; width: 175px; z-index: 100; pointer-events: none">
+    <header>
+        <h1>Gallery</h1>
+        <nav>
+            <ul class="tabs">
+                <li><a href="index.html">Atlas</a></li>
+                <li><a href="herbarium.html">Herbarium</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="gallery-container">
+        <div id="photo-grid" class="photo-grid">
+            <!-- Images will be inserted here -->
+        </div>
+        <form id="upload-form">
+            <input type="file" id="photo-upload" accept="image/*" multiple style="display:none;">
+            <button type="button" id="upload-btn">Choose Photos</button>
+        </form>
+    </main>
+    <script>
+    const photoGrid = document.getElementById('photo-grid');
+    const photoUpload = document.getElementById('photo-upload');
+    const uploadBtn = document.getElementById('upload-btn');
+
+    function addImageToGrid(src) {
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'gallery-photo';
+        img.alt = 'Garden photo';
+        photoGrid.appendChild(img);
+    }
+
+    uploadBtn.addEventListener('click', () => photoUpload.click());
+
+    photoUpload.addEventListener('change', async (e) => {
+        const files = Array.from(e.target.files);
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                await addPhotoToDB(event.target.result);
+                photos = await getAllPhotosFromDB();
+                localStorage.setItem('galleryOrder', JSON.stringify(photos.map(p => p.id)));
+                renderGrid();
+            };
+            reader.readAsDataURL(file);
+        }
+        photoUpload.value = '';
+    });
+
+    // --- IndexedDB Setup ---
+    const DB_NAME = 'galleryDB';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'photos';
+    let db;
+
+    function openDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            request.onerror = () => reject(request.error);
+            request.onsuccess = () => {
+                db = request.result;
+                resolve(db);
+            };
+            request.onupgradeneeded = (e) => {
+                db = e.target.result;
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+                    db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                }
+            };
+        });
+    }
+
+    function addPhotoToDB(dataURL) {
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            const req = store.add({ dataURL });
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => reject(req.error);
+        });
+    }
+
+    function getAllPhotosFromDB() {
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readonly');
+            const store = tx.objectStore(STORE_NAME);
+            const req = store.getAll();
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => reject(req.error);
+        });
+    }
+
+    function deletePhotoFromDB(id) {
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            const req = store.delete(id);
+            req.onsuccess = () => resolve();
+            req.onerror = () => reject(req.error);
+        });
+    }
+
+    function reorderPhotosInDB(newOrder) {
+        // Remove all and re-add in new order, preserving IDs
+        return new Promise(async (resolve) => {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            // Remove all
+            const allReq = store.getAll();
+            allReq.onsuccess = async () => {
+                const all = allReq.result;
+                // Wait for all deletes to finish
+                await Promise.all(all.map(item => new Promise(res => { const del = store.delete(item.id); del.onsuccess = res; del.onerror = res; } )));
+                // Re-add in new order, but preserve IDs
+                for (const photo of newOrder) {
+                    // If photo has an id, use put to preserve it
+                    if (photo.id) store.put(photo);
+                    else store.add(photo);
+                }
+                tx.oncomplete = resolve;
+            };
+        });
+    }
+
+    // --- UI Logic ---
+    let photos = [];
+    let dragSrcIndex = null;
+
+    function renderGrid() {
+        photoGrid.innerHTML = '';
+        // Sort photos by a persistent order array in localStorage
+        let order = JSON.parse(localStorage.getItem('galleryOrder') || '[]');
+        if (order.length === photos.length && photos.length > 0) {
+            // Sort photos by order array
+            photos = order.map(id => photos.find(p => p.id === id)).filter(Boolean);
+        } else {
+            // If order is missing or mismatched, update order
+            order = photos.map(p => p.id);
+            localStorage.setItem('galleryOrder', JSON.stringify(order));
+        }
+        photos.forEach((photo, idx) => {
+            const img = document.createElement('img');
+            img.src = photo.dataURL;
+            img.className = 'gallery-photo';
+            img.alt = 'Garden photo';
+            img.draggable = true;
+            img.dataset.idx = idx;
+            img.addEventListener('dragstart', (e) => {
+                dragSrcIndex = idx;
+                e.dataTransfer.effectAllowed = 'move';
+                setTimeout(() => img.classList.add('dragging'), 0);
+            });
+            img.addEventListener('dragend', (e) => {
+                img.classList.remove('dragging');
+                dragSrcIndex = null;
+            });
+            img.addEventListener('dragover', (e) => e.preventDefault());
+            img.addEventListener('drop', (e) => {
+                e.preventDefault();
+                if (dragSrcIndex !== null && dragSrcIndex !== idx) {
+                    const moved = photos.splice(dragSrcIndex, 1)[0];
+                    photos.splice(idx, 0, moved);
+                    // Save new order to localStorage
+                    localStorage.setItem('galleryOrder', JSON.stringify(photos.map(p => p.id)));
+                    reorderPhotosInDB(photos).then(() => {
+                        renderGrid();
+                    });
+                }
+            });
+            img.addEventListener('click', () => openPreview(photo.dataURL));
+            photoGrid.appendChild(img);
+        });
+        // Always update order in localStorage after render
+        localStorage.setItem('galleryOrder', JSON.stringify(photos.map(p => p.id)));
+    }
+
+    // --- Delete Bin ---
+    const deleteBin = document.createElement('div');
+    deleteBin.id = 'delete-bin';
+    deleteBin.innerHTML = '🗑️<br>Delete';
+    deleteBin.style.display = 'none';
+    document.body.appendChild(deleteBin);
+
+    photoGrid.addEventListener('dragstart', () => {
+        deleteBin.style.display = 'flex';
+    });
+    photoGrid.addEventListener('dragend', () => {
+        deleteBin.style.display = 'none';
+    });
+    deleteBin.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        deleteBin.classList.add('over');
+    });
+    deleteBin.addEventListener('dragleave', () => {
+        deleteBin.classList.remove('over');
+    });
+    deleteBin.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (dragSrcIndex !== null) {
+            const [removed] = photos.splice(dragSrcIndex, 1);
+            deletePhotoFromDB(removed.id).then(() => {
+                reorderPhotosInDB(photos).then(() => {
+                    getAllPhotosFromDB().then(dbPhotos => {
+                        photos = dbPhotos;
+                        renderGrid();
+                    });
+                });
+            });
+            dragSrcIndex = null;
+            deleteBin.classList.remove('over');
+            deleteBin.style.display = 'none';
+        }
+    });
+
+    // --- Preview Window ---
+    function openPreview(src) {
+        let overlay = document.getElementById('preview-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'preview-overlay';
+            overlay.innerHTML = '<div id="preview-window"><img id="preview-img"><span id="close-preview">&times;</span></div>';
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay || e.target.id === 'close-preview') overlay.style.display = 'none';
+            });
+        }
+        document.getElementById('preview-img').src = src;
+        overlay.style.display = 'flex';
+    }
+
+    // --- Load and Save ---
+    openDB().then(async () => {
+        photos = await getAllPhotosFromDB();
+        renderGrid();
+    });
+    </script>
+</body>
+</html>
