@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             image = photoKey;
         }
         savePlant(image);
+        if (typeof showToast === 'function') showToast('Entry added!', true);
     });
 
     function savePlant(image) {
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderPlantList();
         addPlantForm.reset();
         document.getElementById('plant-color').value = '#145214';
+        if (typeof showToast === 'function') showToast('Entry saved!', true);
     }
 
     // Load plants from localStorage on page load
@@ -186,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('herbariumPlants', JSON.stringify(plants));
                 renderPlantList(filter);
                 renderTOC(filter);
+                if (typeof showToast === 'function') showToast('Entry removed!', true);
             });
             page.querySelector('.edit-plant').addEventListener('click', () => {
                 document.getElementById('plant-name').value = plant.commonName;
@@ -210,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('herbariumPlants', JSON.stringify(plants));
                 renderPlantList(filter);
                 renderTOC(filter);
+                if (typeof showToast === 'function') showToast('Ready to edit. Make changes and submit!');
             });
             // Append each page directly to the .flipbook, not as children of #plant-pages
             // This ensures each .page is a direct child of .flipbook for turn.js

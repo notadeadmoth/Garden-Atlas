@@ -172,21 +172,24 @@
           <input id="upload-input" type="file" accept="image/*" style="display: block; margin: 0rem; padding-top: 5px; padding-bottom: 5px;">
         </div>
         <div style="display: flex; margin-top: 1rem;">
-            <section id="plant-info" style="flex: 1; margin-right: 1rem;">
-                <h2>Plant List</h2>
-                <ul id="plant-list">
-                    <!-- Plant entries will be dynamically added here -->
-                </ul>
-            </section>
-            <section id="selected-plant-info" style="flex: 1;">
+          <section id="selected-plant-info" style="flex: 1;">
                 <h2>Selected Plant</h2>
                 <img id="selected-plant-image" src="" alt="Plant Image" style="width: 100%; height: auto; display: none;">
                 <div id="selected-plant-details">
                     <!-- Selected plant details will be dynamically added here -->
                 </div>
             </section>
+            <section id="plant-info" style="flex: 1; margin-right: 1rem;">
+                <h2>Plant List</h2>
+                <ul id="plant-list" id="garden-tags"></ul>
+                    <!-- Plant entries will be dynamically added here -->
+                </ul>
+            </section>
         </div>
     </main>
+    <script src="toast.js"></script>
     <script src="script.js"></script>
+    <script src="tag-randomizer.js"></script>
+    <script src="tag-carousel.js"></script>
 </body>
 </html>

@@ -51,11 +51,37 @@ header {
     padding-bottom: 0rem;
 }
 
+/* --- Responsive Map Container --- */
 #map {
-    height: 700px;
-    margin: 1rem;
-    border: 3px solid #8b4513;
-    border-radius: 20px;
+  width: 100%;
+  max-width: 1600px;
+  height: 70vh;
+  min-height: 350px;
+  margin: 1rem auto;
+  border: 3px solid #8b4513;
+  border-radius: 20px;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  transition: height 0.3s, width 0.3s;
+}
+@media (max-width: 900px) {
+  #map {
+    max-width: 98vw;
+    height: 55vh;
+    min-height: 220px;
+    margin: 0.5rem auto;
+  }
+}
+@media (max-width: 600px) {
+  #map {
+    max-width: 100vw;
+    height: 38vh;
+    min-height: 120px;
+    margin: 0.2rem auto;
+    border-width: 2px;
+    border-radius: 12px;
+  }
 }
 
 #plant-info {
@@ -167,18 +193,17 @@ body#index-page #plant-list {
 body#index-page #plant-list li {
     width: fit-content;
     min-width: 200px;
+    background-color: #ffffff00;
+    border: 0;
     max-width: 600px;
     margin-bottom: 1rem;
     padding: 1rem;
-    border: 1px solid #8b4513;
     border-radius: 5px;
-    background-color: #fff;
     cursor: pointer;
     transition: background 0.2s, box-shadow 0.18s cubic-bezier(0.4, 0.2, 0.2, 1), transform 0.18s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 body#index-page #plant-list li:hover {
-    background-color: #f0f0f0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.253);
+    box-shadow: none;
     transform: scale(1.04);
 }
 
@@ -228,6 +253,20 @@ nav {
     border-color: #ccc;
     color: #334131;
     padding-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .tabs {
+    gap: 0.7rem;
+  }
+  .tabs a {
+    font-size: 0.95rem;
+    padding: 0.3rem 0.6rem;
+  }
+  .tabs li {
+    padding-bottom: 2px;
+    font-size: 0.95em;
+  }
 }
 
 #calendar-container {
@@ -1207,4 +1246,189 @@ input {
 #close-preview:hover {
   color: #d32f2f;
   background: #ffe0e0;
+}
+/* === Styled Feedback Toast === */
+.toast-message {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(40, 120, 60, 0.95);
+  color: #fff;
+  padding: 0.75em 2em;
+  border-radius: 1.5em;
+  font-size: 1.1em;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.4s cubic-bezier(.4,2,.6,1), bottom 0.4s cubic-bezier(.4,2,.6,1);
+}
+.toast-message.show {
+  opacity: 1;
+  bottom: 3.5rem;
+  pointer-events: auto;
+}
+
+/* --- Atlas Tag Carousel Overlay --- */
+body#index-page #plant-list {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 180px;
+  min-width: 0;
+  max-width: 180px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 1.2rem;
+  background: none;
+  pointer-events: auto;
+  transition: width 0.4s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+  box-shadow: none !important;
+  overflow: visible;
+  box-shadow: none !important;
+  left: -15px;
+}
+body#index-page #plant-list.carousel-collapsed {
+  width: 18px;
+  min-width: 0;
+  box-shadow: none;
+  pointer-events: auto;
+  justify-content: center;
+}
+
+body#index-page #plant-list.carousel-expanded {
+  width: 260px;
+  justify-content: center;
+  min-width: 180px;
+  max-width: 180px;
+  box-shadow: none !important;
+  background: none;
+  pointer-events: auto;
+}
+body#index-page #plant-list li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  min-width: 38px;
+  width: 38px;
+  max-width: 220px;
+  padding: 0.5rem 3rem 0.5rem 0.5em;
+  overflow: visible;
+  background: none;
+  border: none;
+  box-shadow: none !important;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(40px) scale(0.95) translateX(0);
+  transition: transform 0.3s cubic-bezier(.4,2,.6,1), width 0.3s, box-shadow 0.2s, opacity 0.7s, z-index 0.2s;
+  pointer-events: auto;
+  z-index: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1.1em;
+  
+}
+body#index-page #plant-list li.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+body#index-page #plant-list li .plant-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  margin-right: 0.2em;
+  z-index: 2;
+  transition: filter 0.2s;
+}
+body#index-page #plant-list li .plant-name {
+  opacity: 0;
+  max-width: 0;
+  margin-left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity 0.25s, max-width 0.25s, margin-left 0.25s;
+  font-size: 1.1em;
+  color: #222;
+  z-index: 3;
+}
+body#index-page #plant-list li:hover {
+  width: 180px;
+  transform: translateX(40px) scale(1.08);
+  z-index: 10;
+}
+body#index-page #plant-list li:hover .plant-name {
+  opacity: 1;
+  max-width: 140px;
+  margin-left: 0.7em;
+}
+body#index-page #plant-list li:hover .plant-icon {
+  filter: drop-shadow(0 4px 8px #0003) brightness(1.1);
+}
+body#index-page #plant-list li::before {
+  content: '';
+  position: absolute;
+  left: 2em;
+  top: 0.2em;
+  width: calc(100% - 2.7em);
+  height: calc(100% - 0.4em);
+  border-radius: 0 12px 12px 0;
+  z-index: 0;
+  box-shadow: none;
+  pointer-events: none;
+}
+body#index-page #plant-list::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+body#index-page #plant-list.carousel-collapsed li {
+  width: 18px;
+  min-width: 0;
+  max-width: 24px;
+  opacity: 0.7;
+  pointer-events: none;
+  right: -30px;
+  overflow: hidden;
+}
+body#index-page #plant-list.carousel-expanded li {
+  width: 38px;
+  min-width: 38px;
+  opacity: 1;
+  pointer-events: auto;
+  right: 40px;
+  width: fit-content;
+
+}
+@media (max-width: 900px) {
+  body#index-page #plant-list {
+    width: 18px;
+    min-width: 0;
+    max-width: 60px;
+  }
+  body#index-page #plant-list.carousel-expanded {
+    width: 120px;
+    min-width: 60px;
+    max-width: 180px;
+  }
+  body#index-page #plant-list li {
+    min-width: 28px;
+    width: 28px;
+    max-width: 60px;
+    font-size: 0.95em;
+  }
+  body#index-page #plant-list li:hover {
+    width: 70px;
+    transform: translateX(20px) scale(1.08);
+  }
+  body#index-page #plant-list li:hover .plant-name {
+    max-width: 40px;
+  }
 }

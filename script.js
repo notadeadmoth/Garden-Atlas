@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         marker.on('contextmenu', function () {
             map.removeLayer(marker);
             saveMarkersToCurrentGarden();
+            if (typeof showToast === 'function') showToast('Marker removed!');
         });
         marker.on('dragend', function () {
             saveMarkersToCurrentGarden();
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
         saveMarkersToCurrentGarden();
+        if (typeof showToast === 'function') showToast('Marker placed!');
     }
     function handleMapDragOver(event) {
         event.preventDefault();
@@ -199,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setCurrentGardenId(id);
         renderGardenSelect();
         loadGardenToMap();
+        if (typeof showToast === 'function') showToast('Garden created!');
     });
 
     gardenSelect.addEventListener('change', () => {
@@ -206,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createMap();
         setCurrentGardenId(gardenSelect.value);
         setTimeout(() => loadGardenToMap(), 0);
+        if (typeof showToast === 'function') showToast('Switched to garden: ' + gardenSelect.options[gardenSelect.selectedIndex].text);
     });
 
     renameGardenBtn.addEventListener('click', () => {
@@ -218,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         garden.name = name;
         updateGarden(garden);
         renderGardenSelect();
+        if (typeof showToast === 'function') showToast('Garden renamed!');
     });
 
     deleteGardenBtn.addEventListener('click', () => {
@@ -227,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteGarden(id);
         renderGardenSelect();
         loadGardenToMap();
+        if (typeof showToast === 'function') showToast('Garden deleted!');
     });
 
     // --- INITIALIZE GARDENS ON FIRST LOAD --- //
@@ -327,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
             marker.on('contextmenu', function () {
                 map.removeLayer(marker);
                 saveMarkersToCurrentGarden();
+                if (typeof showToast === 'function') showToast('Marker removed!');
             });
             marker.on('dragend', function () {
                 saveMarkersToCurrentGarden();
@@ -396,6 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
             createMap();
             setTimeout(() => loadGardenToMap(), 0);
             uploadInput.value = '';
+            if (typeof showToast === 'function') showToast('Garden image updated!');
         }
     });
 
