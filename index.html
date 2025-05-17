@@ -163,7 +163,16 @@
                 <span>Dec</span>
             </div>
         </div>
-        <div id="map"></div>
+        <div>
+          
+          <div id="map">
+            <img src="Images/book-spine-overlay.png" id="bookSpineOverlay" alt="Book Spine">
+            <ul id="plant-list" id="garden-tags">
+                    <!-- Plant entries will be dynamically added here -->
+            </ul>
+            <img src="Images/book-spine.png" id="bookSpine" alt="Book Spine">
+          </div>
+        </div>
         <div id="garden-manager" style="margin-bottom: 1em; display: flex; align-items: center; gap: 0.5em;">
           <select id="garden-select"></select>
           <button id="create-garden-btn" title="Create New Garden">＋</button>
@@ -179,12 +188,8 @@
                     <!-- Selected plant details will be dynamically added here -->
                 </div>
             </section>
-            <section id="plant-info" style="flex: 1; margin-right: 1rem;">
-                <h2>Plant List</h2>
-                <ul id="plant-list" id="garden-tags"></ul>
-                    <!-- Plant entries will be dynamically added here -->
-                </ul>
-            </section>
+            <h2>Plant List</h2>
+            <section id="plant-info" style="flex: 1; margin-right: 1rem;"> </section>
         </div>
     </main>
     <script src="toast.js"></script>

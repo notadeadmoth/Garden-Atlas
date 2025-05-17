@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     'Images/tag4.png'
   ];
   // Select all plant list items (garden tags)
-  const plantList = document.getElementById('plant-list');
+  const plantList = document.querySelector('#map #plant-list');
   if (!plantList) return;
   // If categories are used, get all li inside ul.category-list
   let tagItems = plantList.querySelectorAll('li');

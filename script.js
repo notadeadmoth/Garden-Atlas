@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         map.getContainer().style.background = 'rgba(10, 14, 12, 0.5)';
         map.getContainer().style.borderRadius = '25px';
         map.getContainer().style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+        map.zoomControl.setPosition('topright');
         setTimeout(() => { map.invalidateSize(); }, 100);
         // Remove old event listeners before adding new ones
         map.getContainer().removeEventListener('drop', handleMapDrop);

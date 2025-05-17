@@ -3,10 +3,15 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   if (!document.body.id || document.body.id !== 'index-page') return;
-  const tagList = document.getElementById('plant-list');
+  // Change selector to match new carousel location inside #map
+  const tagList = document.querySelector('#map #plant-list');
   if (!tagList) return;
   const tags = Array.from(tagList.querySelectorAll('li'));
   tags.forEach(li => li.classList.remove('visible'));
+  tags.forEach(li => {
+  li.addEventListener('mousedown', e => e.stopPropagation());
+  li.addEventListener('dragstart', e => e.stopPropagation());
+});
   // Fade in each tag in sequence
   tags.forEach((li, i) => {
     setTimeout(() => li.classList.add('visible'), 200 + i * 120);
