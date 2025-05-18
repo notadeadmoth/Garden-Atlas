@@ -420,6 +420,36 @@ document.addEventListener('DOMContentLoaded', () => {
     loadGardenToMap();
 
     const plantList = document.getElementById('plant-list');
+    // --- Add this scroll blocking code below ---
+let isCarouselExpanded = false;
+
+function stopMapScrollEvents(e) {
+    e.stopPropagation();
+    if (e.type === 'wheel' || e.type === 'touchmove') {
+        e.preventDefault();
+    }
+}
+
+function enableCarouselScrollBlock() {
+    plantList.addEventListener('wheel', stopMapScrollEvents, { passive: false });
+    plantList.addEventListener('touchmove', stopMapScrollEvents, { passive: false });
+}
+
+function disableCarouselScrollBlock() {
+    plantList.removeEventListener('wheel', stopMapScrollEvents, { passive: false });
+    plantList.removeEventListener('touchmove', stopMapScrollEvents, { passive: false });
+}
+
+const observer = new MutationObserver(() => {
+    isCarouselExpanded = plantList.classList.contains('carousel-expanded');
+    if (isCarouselExpanded) {
+        enableCarouselScrollBlock();
+    } else {
+        disableCarouselScrollBlock();
+    }
+});
+observer.observe(plantList, { attributes: true, attributeFilter: ['class'] });
+// --- End scroll blocking code ---
 
     // Removed example plant data
     const plants = [];

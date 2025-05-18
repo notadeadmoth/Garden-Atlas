@@ -579,6 +579,75 @@ body#index-page #plant-list li:hover {
   background: #ffe0e0;
 }
 
+
+#garden-manager {
+    color: #f0f0f0;
+    align-items: center;
+    border: #617e5d solid 2px;
+    border-radius: 20px;
+    border-width: 5px;
+    margin: 1rem;
+    padding-left: 1rem;
+    background-color: #8eb38e91;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+
+#create-garden-btn {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#create-garden-btn:hover {
+    background-color: #a0522d;
+    
+}
+#rename-garden-btn {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#rename-garden-btn:hover {
+    background-color: #a0522d;
+}
+#delete-garden-btn {
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#delete-garden-btn:hover {
+    background-color: #a0522d;
+}
+#garden-select {
+    margin: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    background-color: #8b4513;
+    color: white;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+#upload-input {
+    margin: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    background-color: #8b4513;
+    color: white;
+    box-shadow: #2222229c 2px 2px 5px;
+}
+
 /* =========================
     Toasts & Feedback
    ========================= */
@@ -615,10 +684,10 @@ body#index-page #plant-list li:hover {
 body#index-page #plant-list {
   position: relative;
   left: 150px;
-  height: 100%;
+  height: 97%;
+  align-items: center;
   width: 48px;
   min-width: 0;
-  max-width: 260px;
   z-index: 2000;
   display: flex;
   flex-direction: column;
@@ -641,13 +710,13 @@ body#index-page #plant-list.carousel-collapsed {
   box-shadow: none;
   pointer-events: auto;
   justify-content: flex-start;
-  gap: 0.15rem;
+  overflow-y: scroll;
 }
 body#index-page #plant-list.carousel-expanded {
-  width: 220px;
   left: 2.5%;
-  min-width: 120px;
-  max-width: 260px;
+  min-width: 300px;
+  width: 25%;
+  max-width: 1000px;
   box-shadow: none !important;
   align-items: flex-start;
   padding: 0;
@@ -655,8 +724,9 @@ body#index-page #plant-list.carousel-expanded {
   pointer-events: auto;
   gap: 0.25rem;
   scrollbar-width: none;
+  overflow-y: scroll;
 }
-body#index-page #plant-list.carousel-expanded::-webkit-scrollbar {
+body#index-page #plant-list::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
 .plant-list-inner {
@@ -684,14 +754,12 @@ body#index-page #plant-list li {
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 1.1em;
-  overflow: hidden;
 }
 body#index-page #plant-list.carousel-expanded li {
   width: 100%;
-  min-width: 0;
   max-width: 100%;
   padding-left: 25px !important;
-  padding-right: 1px !important;
+  padding-right: 0px !important;
   opacity: 1;
   pointer-events: auto;
   transition: width 0.4s cubic-bezier(.4,2,.6,1), transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.2s, opacity 0.7s, z-index 0.2s;
@@ -752,15 +820,6 @@ body#index-page #plant-list li:hover .plant-name {
 body#index-page #plant-list li:hover .plant-icon {
   filter: drop-shadow(0 4px 8px #0003) brightness(1.1);
 }
-body#index-page #plant-list li.category {
-  margin: 0.1rem 0 0.2rem 0;
-  padding: 0.4rem 0.7rem 0.4rem 0.5em;
-  font-weight: bold;
-  border-radius: 8px;
-  font-size: 1.05em;
-  
-  
-}
 body#index-page #plant-list::-webkit-scrollbar {
   width: 8px;
   background: transparent;
@@ -769,6 +828,17 @@ body#index-page #plant-list::-webkit-scrollbar-thumb {
   background: #8b4513;
   border-radius: 4px;
 }
+body#index-page #plant-list.carousel-collapsed h3 {
+  /* Example styles: */
+  color:#00000000
+  /* Add more as needed */
+}
+body#index-page #plant-list.carousel-expanded h3 {
+  /* Example styles: */
+  align-self: center;
+  /* Add more as needed */
+}
+/* Responsive styles for the plant list
 @media (max-width: 900px) {
   body#index-page #plant-list {
     width: 48px;
@@ -784,7 +854,7 @@ body#index-page #plant-list::-webkit-scrollbar-thumb {
     max-width: 70px;
   }
 }
-
+*/
 #bookSpine {
     position: absolute;
     left: 0px;
