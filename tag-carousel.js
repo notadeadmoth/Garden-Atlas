@@ -38,7 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Expand when mouse is near left edge or over carousel
   function handleMouseMove(e) {
-    if (e.clientX < 40) {
+    const map = document.getElementById('map');
+    if (!map) return;
+    const mapRect = map.getBoundingClientRect();
+    // Check if mouse is within 40px of the map's left edge
+    if (e.clientX >= mapRect.left && e.clientX < mapRect.left + 40 && e.clientY >= mapRect.top && e.clientY <= mapRect.bottom) {
       expandCarousel();
     } else if (!expanded) {
       collapseCarousel();
@@ -54,5 +58,21 @@ document.addEventListener('DOMContentLoaded', function () {
   tagList.addEventListener('wheel', e => {
     tagList.scrollTop += e.deltaY;
     e.preventDefault();
+  }, { passive: false });
+
+  // --- Mobile touch scroll improvement ---
+  let touchStartY = 0;
+  let touchStartScroll = 0;
+  tagList.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 1) {
+      touchStartY = e.touches[0].clientY;
+      touchStartScroll = tagList.scrollTop;
+    }
+  }, { passive: true });
+  tagList.addEventListener('touchmove', function(e) {
+    if (e.touches.length === 1) {
+      const deltaY = touchStartY - e.touches[0].clientY;
+      tagList.scrollTop = touchStartScroll + deltaY;
+    }
   }, { passive: false });
 });

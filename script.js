@@ -552,6 +552,7 @@ observer.observe(plantList, { attributes: true, attributeFilter: ['class'] });
                 listItem.addEventListener('click', () => {
                     const selectedPlantImage = document.getElementById('selected-plant-image');
                     const selectedPlantDetails = document.getElementById('selected-plant-details');
+                    showPlantCard();
 
                     selectedPlantImage.src = plant.image || '';
                     selectedPlantImage.style.display = plant.image ? 'block' : 'none';
@@ -757,30 +758,6 @@ observer.observe(plantList, { attributes: true, attributeFilter: ['class'] });
             iconSize: [84, 84],
             iconAnchor: [42, 42],
             popupAnchor: [0, -42]
-        });
-    }
-
-    // --- DELETE ALL MARKERS BUTTON --- //
-    const deleteAllMarkersBtn = document.getElementById('delete-all-markers-btn');
-    if (deleteAllMarkersBtn) {
-        deleteAllMarkersBtn.addEventListener('click', () => {
-            if (!confirm('Delete all markers from this garden? This cannot be undone.')) return;
-            // Remove all markers from the map
-            map.eachLayer(layer => {
-                if (layer instanceof L.Marker) {
-                    map.removeLayer(layer);
-                }
-            });
-            // Update the current garden's marker data
-            const garden = getCurrentGarden();
-            if (garden) {
-                garden.markers = [];
-                updateGarden(garden);
-                // Refresh the map display to remove any marker artifacts
-                if (typeof loadGardenToMap === 'function') {
-                    loadGardenToMap();
-                }
-            }
         });
     }
 });
