@@ -267,6 +267,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         tocList.innerHTML = '';
 
+        // --- Responsive TOC styles for small screens ---
+        if (window.innerWidth <= 600) {
+            tocPage.style.padding = '0.5em 0.2em';
+            tocPage.style.fontSize = '60%';
+            tocTitle.style.fontSize = '1em';
+            tocTitle.style.textAlign = 'center';
+            tocList.style.maxHeight = '200px';
+        } else {
+            tocPage.style.padding = '';
+            tocPage.style.fontSize = '';
+            tocTitle.style.fontSize = '';
+            tocTitle.style.textAlign = '';
+            tocList.style.maxHeight = '350px';
+        }
+
         // Collect all unique categories from filtered plants
         const categoryMap = {};
         plants.forEach(plant => {

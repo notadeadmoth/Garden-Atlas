@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Caveat&display=swap" rel="stylesheet">
 
 </head>
 <body id="index-page">
@@ -174,21 +175,20 @@
           </div>
         </div>
         <div id="garden-manager" style="margin-bottom: 1em; display: flex; align-items: center; gap: 0.5em;">
-          <select id="garden-select"></select>
-          <button id="create-garden-btn" title="Create New Garden">＋</button>
-          <button id="rename-garden-btn" title="Rename Garden">✎</button>
-          <button id="delete-garden-btn" title="Delete Garden">🗑️</button>
-          <input id="upload-input" type="file" accept="image/*" style="display: block; margin: 0rem; padding-top: 5px; padding-bottom: 5px;">
+          <select class="garden-btn" id="garden-select"></select>
+          <button class="garden-btn" id="create-garden-btn" title="Create New Garden">＋</button>
+          <button class="garden-btn" id="rename-garden-btn" title="Rename Garden">✎</button>
+          <button class="garden-btn" id="delete-garden-btn" title="Delete Garden">🗑️</button>
+          <label class="garden-btn" id="upload-label" for="upload-input" title="Upload Image">🖼️</label>
+          <input id="upload-input" type="file" accept="image/*" style="display:none;">
         </div>
-        <div style="display: flex; margin-top: 1rem;">
-          <section id="selected-plant-info" style="flex: 1;">
-                <h2>Selected Plant</h2>
-                <img id="selected-plant-image" src="" alt="Plant Image" style="width: 100%; height: auto; display: none;">
-                <div id="selected-plant-details">
-                    <!-- Selected plant details will be dynamically added here -->
-                </div>
-            </section>
-            <h2>Plant List</h2>
+        <div class="plant-card" id="selected-plant-info">
+            <img class="pin" src="Images/Copper_Antique_Brass_Wire_Bulldog_Clip-Clipped_2-G4Q10G10O6P10.png" style="width: 150px;">
+            <img id="selected-plant-image" class="plant-photo" src="https://www.provenwinners.com/sites/provenwinners.com/files/imagecache/low-resolution/ifa_upload/lavandula_sweet_romance_apj18_10.jpg" alt="Plant Image">
+            <h2><em>Selected Plant</em></h2>
+            <p class="note"></p>
+            <p class="meta" id="selected-plant-details"></p>
+            <span class="annotation" style="top: 85%; left: 10%;"></span>
         </div>
     </main>
     <script src="toast.js"></script>

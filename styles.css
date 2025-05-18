@@ -588,65 +588,39 @@ body#index-page #plant-list li:hover {
     border-width: 5px;
     margin: 1rem;
     padding-left: 1rem;
+    padding-right: 1rem;
     background-color: #8eb38e91;
     box-shadow: #2222229c 2px 2px 5px;
+    justify-content: center;
+    justify-self: center;
+    width: fit-content;
+
 }
 
-#create-garden-btn {
+/* =========================
+   Garden Manager Button Consistency
+   ========================= */
+.garden-btn {
     background-color: #8b4513;
     color: white;
     border: none;
     border-radius: 5px;
+    font-size: small;
     padding: 0.5rem 1rem;
     cursor: pointer;
     box-shadow: #2222229c 2px 2px 5px;
+    transition: background 0.2s;
 }
-#create-garden-btn:hover {
-    background-color: #a0522d;
-    
-}
-#rename-garden-btn {
-    background-color: #8b4513;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    box-shadow: #2222229c 2px 2px 5px;
-}
-#rename-garden-btn:hover {
+.garden-btn:hover {
     background-color: #a0522d;
 }
-#delete-garden-btn {
-    background-color: #8b4513;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    box-shadow: #2222229c 2px 2px 5px;
-}
-#delete-garden-btn:hover {
-    background-color: #a0522d;
-}
-#garden-select {
-    margin: 1rem;
-    padding: 0.5rem;
-    border: 1px solid #8b4513;
-    border-radius: 5px;
-    background-color: #8b4513;
-    color: white;
-    box-shadow: #2222229c 2px 2px 5px;
-}
+
 #upload-input {
-    margin: 1rem;
-    padding: 0.5rem;
-    border: 1px solid #8b4513;
-    border-radius: 5px;
-    background-color: #8b4513;
-    color: white;
-    box-shadow: #2222229c 2px 2px 5px;
+    display: none;
 }
+
+/* Remove individual button styles for garden manager buttons and upload label */
+/* ...existing code... */
 
 /* =========================
     Toasts & Feedback
@@ -1015,6 +989,8 @@ nav {
     padding-left: 4rem;
     padding-right: 4rem;
     position: relative;
+    justify-content: center;
+    justify-self: center;
 }
 
 /* Add a wrapper for shadow and form */
@@ -1415,5 +1391,62 @@ nav {
     height: 800% !important;
     z-index: -1;
 }
+    .plant_card {
+      background-color: #f9f7f1;
+      font-family: 'EB Garamond', serif;
+      padding: 2rem;
+    }
+    .plant-card {
+      position: relative;
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png') repeat;
+      background-color: #f5e9dc;
+      padding: 2rem;
+      max-width: 400px;
+      margin: 2rem auto;
+      border: 1px solid #d8c9b3;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
 
+    .plant-photo {
+      width: 100%;
+      filter: grayscale(90%) contrast(110%) brightness(95%);
+      mix-blend-mode: multiply;
+      border: 1px solid #ccc;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.08);
+      margin-bottom: 1rem;
+    }
+
+    .pin {
+      position: absolute;
+      top: -106px;
+      left: -16px;
+      width: 40px;
+      transform: rotate(-8deg);
+    }
+
+    h2 {
+      font-style: italic;
+      margin: 0.2rem 0;
+    }
+
+    .note {
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      color: #444;
+      margin: 0.5rem 0 1rem;
+    }
+
+    .meta {
+      font-size: 0.9rem;
+      color: #6b5c4b;
+    }
+
+    .annotation {
+      position: absolute;
+      font-family: 'Caveat', cursive;
+      font-size: 1rem;
+      color: #444;
+      transform: rotate(-3deg);
+      opacity: 0.7;
+    }
 /* END OF FILE */
