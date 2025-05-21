@@ -538,11 +538,11 @@ observer.observe(plantList, { attributes: true, attributeFilter: ['class'] });
                 listItem.innerHTML = `${iconSVG}${plant.commonName || 'Unnamed Plant'}`;
                 listItem.draggable = true;
 
-                if (plant.isWeed) {
-                    listItem.style.backgroundColor = 'rgb(230, 189, 189)';
-                } else if (plant.isNative) {
-                    listItem.style.backgroundColor = 'rgb(188, 204, 188)';
-                }
+                //if (plant.isInvasive) {
+                //    listItem.style.backgroundColor = 'rgb(230, 189, 189)';
+                //} else if (plant.isNative) {
+                //    listItem.style.backgroundColor = 'rgb(188, 204, 188)';
+                //}
 
                 listItem.addEventListener('dragstart', (event) => {
                     event.dataTransfer.setData('text/plain', JSON.stringify(plant));

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addPlantForm = document.getElementById('add-plant-form');
     const searchBar = document.getElementById('search-bar');
     const plantList = document.getElementById('plant-list');
-    const isWeedCheckbox = document.getElementById('is-weed');
+    const isInvasiveCheckbox = document.getElementById('is-invasive');
     const categoryInput = document.getElementById('category');
     const isNativeCheckbox = document.getElementById('is-native');
 
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function savePlant(image) {
-        const isWeed = isWeedCheckbox.checked;
+        const isInvasive = isInvasiveCheckbox.checked;
         const isNative = isNativeCheckbox.checked;
         // Get selected icon
         const iconRadio = document.querySelector('input[name="plant-icon"]:checked');
@@ -80,10 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
             light: document.getElementById('light-requirements').value.trim(),
             soil: document.getElementById('soil-requirements').value.trim(),
             growthZone: document.getElementById('growth-zone').value.trim(),
-            category: isWeed ? 'Weeds' : document.getElementById('category').value.trim(),
             iconColor: document.getElementById('plant-color').value.trim(),
             notes: document.getElementById('plant-notes').value.trim(),
-            isWeed: isWeed,
+            isInvasive: isInvasive,
             isNative: isNative,
             icon: icon,
             iconColor: iconColor
@@ -176,12 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class="remove-plant">Remove</button>
                 </div>
             `;
-            // Color background for weed/native
-            if (plant.isWeed) {
-                page.style.backgroundColor = 'rgb(230, 189, 189)';
-            } else if (plant.isNative) {
-                page.style.backgroundColor = 'rgb(188, 204, 188)';
-            }
+            // Color background for invasive/native
+            //if (plant.isInvasive) {
+            //    page.style.backgroundColor = 'rgb(230, 189, 189)';
+            //} else if (plant.isNative) {
+            //    page.style.backgroundColor = 'rgb(188, 204, 188)';
+            //}
             // Add event listeners for edit/remove
             page.querySelector('.remove-plant').addEventListener('click', () => {
                 plants = plants.filter(p => p !== plant);
@@ -199,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('growth-zone').value = plant.growthZone;
                 document.getElementById('category').value = plant.category;
                 document.getElementById('plant-notes').value = plant.notes;
-                isWeedCheckbox.checked = plant.isWeed;
+                isInvasiveCheckbox.checked = plant.isInvasive;
                 isNativeCheckbox.checked = plant.isNative;
                 if (plant.icon) {
                     const iconRadio = document.querySelector(`input[name='plant-icon'][value='${plant.icon}']`);
@@ -345,8 +344,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    isWeedCheckbox.addEventListener('change', () => {
-        if (isWeedCheckbox.checked) {
+    isInvasiveCheckbox.addEventListener('change', () => {
+        if (isInvasiveCheckbox.checked) {
             isNativeCheckbox.checked = false;
             isNativeCheckbox.disabled = true;
         } else {
@@ -356,10 +355,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     isNativeCheckbox.addEventListener('change', () => {
         if (isNativeCheckbox.checked) {
-            isWeedCheckbox.checked = false;
-            isWeedCheckbox.disabled = true;
+            isInvasiveCheckbox.checked = false;
+            isInvasiveCheckbox.disabled = true;
         } else {
-            isWeedCheckbox.disabled = false;
+            isInvasiveCheckbox.disabled = false;
         }
     });
 });
